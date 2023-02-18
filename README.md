@@ -26,7 +26,7 @@ Upscale anime to 4k using mpv and anime4k filters, convert to 48fps using [hybri
 (Given a filename with a lot of extra unnessary information and potentially season information, clean up the filename and extract season info)
 #### Remove:
   - underlines between words
-  - everything between round and square brackets (stuff to remove) and [stuff to remove]
+  - everything between round and square brackets e.g. (stuff to remove) and [stuff to remove]
   - dashes between words that are not between anime name and episode number
   - whitespaces at beginning and end of filename
      ##### goal is to have ([anime name] [season] - [episode number]) as the final result
