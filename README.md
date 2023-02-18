@@ -1,5 +1,5 @@
 # Convert-and-Move-Anime
-Upscale anime to 4k using mpv and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and move the anime into proper subfolders to allow plex to auto add the anime with proper seasons
+Upscale anime to 4k using mpv and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and moving the anime into proper subfolders to allow plex to auto add the anime with proper seasons
 
 ### To convert anime to 4k a custom version of mpv is used which can be found here: [ryandash mpv github](https://github.com/ryandash/mpv)
 ### Script contains the code I use to run mpv and upscale anime to 4k
