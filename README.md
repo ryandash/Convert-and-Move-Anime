@@ -41,7 +41,7 @@ Upscale anime to 4k using mpv and anime4k filters, convert to 48fps using [hybri
 ## Downloads:
   - [Hybrid from selur](https://www.selur.de/downloads)
   - [Ffmpeg](https://ffmpeg.org/download.html)
-  - To compile my version of mpv can be found here [ryandash mpv github](https://github.com/ryandash/mpv) (to compile mpv on windows I used these [instructions](https://github.com/mpv-player/mpv/blob/master/DOCS/compile-windows.md)
+  - Custom mpv can be found here [ryandash mpv github](https://github.com/ryandash/mpv) ([instructions](https://github.com/mpv-player/mpv/blob/master/DOCS/compile-windows.md) I used to compile)
   - To download the pre-compiled mpv that I use you can [download from google drive](https://drive.google.com/file/d/17PnfYLlaqyvZ_UUko_riPqisM5gXHgRG/view?usp=share_link)
   - [Anime4k shaders](https://github.com/bloc97/Anime4K) (I used a command line that I put in the github discussion mentioned above to combine then, the combined versions can be found in the google drive download of mpv or in the discussion)
   - [Mkvmerge](https://mkvtoolnix.download/downloads.html#windows:~:text=repository%20directory%20yourself.-,Windows,-Download)
