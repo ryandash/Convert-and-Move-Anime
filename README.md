@@ -1,9 +1,5 @@
 # Convert-and-Move-Anime
-<<<<<<< Updated upstream
-Upscale anime to 4k using mpv and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and move anime into proper subfolders to allow plex to auto add the anime with proper seasons
-=======
 Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and moving the anime into proper subfolders to allow plex to auto add the anime with proper seasons
->>>>>>> Stashed changes
 
 ### If you would like to replicate my scripts, links to all the downloads necessary are below in [Downloads](https://github.com/ryandash/Convert-and-Move-Anime/blob/main/README.md#downloads) section
 
@@ -38,13 +34,7 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 ## Downloads:
   - [Hybrid from selur](https://www.selur.de/downloads)
   - [Ffmpeg](https://ffmpeg.org/download.html)
-<<<<<<< Updated upstream
-  - Custom mpv can be found here [ryandash mpv github](https://github.com/ryandash/mpv) ([instructions](https://github.com/mpv-player/mpv/blob/master/DOCS/compile-windows.md) I used to compile)
-  - To download the pre-compiled mpv that I use you can [download from google drive](https://drive.google.com/file/d/17PnfYLlaqyvZ_UUko_riPqisM5gXHgRG/view?usp=share_link)
-  - [Anime4k shaders](https://github.com/bloc97/Anime4K) (I used a command line that I put in the github discussion mentioned above to combine then, the combined versions can be found in the google drive download of mpv or in the discussion)
-=======
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in respository are the original anime4k shaders merged together into 1 file for simplicity)
->>>>>>> Stashed changes
   - [Mkvmerge](https://mkvtoolnix.download/downloads.html#windows:~:text=repository%20directory%20yourself.-,Windows,-Download)
   - [Recycle](http://www.maddogsw.com/cmdutils/cmdutils.zip) (it is not necessary to send files to the recycle bin instead of deleting them permanently but I use it to avoid loosing files when I am making changes to the script. This is also an easy to use file that requires no install)
   
