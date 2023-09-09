@@ -7,7 +7,8 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 (Given an anime video, upscale and convert the anime to 4k 48fps)
 #### First half (use ffmpeg for 4k upscale)
 - Use timeouts to avoid trying to convert partially copied anime from another script.
-- Use ffmpeg to upscale anime with anime4k shaders
+- Cleanup %temp% directory (If the computer is used for a long time without restarting then this directory becomes quite large with temp files)
+- Use ffmpeg to upscale anime with anime4k shaders and copy over all subtitles, audio streams, and attachements
 - clean up by deleting all unnecessary empty folders left in downloads
 #### Second half (to use hybrid to convert to 48fps)
 - clean up downloads by deleting all empty folders
@@ -16,7 +17,11 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 -----------------------------------------------
 
 ## Script custommove.bat
-(Given a filename with a lot of extra unnessary information and potentially season information, clean up the filename and extract season info)
+(Given a filename with a lot of unnecessary information and potentially season information, clean up the filename, extract season number, create season folder, and move file into either anime folder or season folder in the anime folder)
+Final result
+[Anime Folder]
+	[Season]
+		[anime mkv file]
 #### Remove:
   - underlines between words
   - everything between round and square brackets e.g. (stuff to remove) and [stuff to remove]
@@ -31,9 +36,9 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 ## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information. Suggestions on how to improve the scripts are welcome and appreciated but I will not be keeping an eye on this repository so do not expect any response to suggestions.
 -----------------------------------------------
 
-## Downloads:
+## Things to Download:
   - [Hybrid from selur](https://www.selur.de/downloads)
-  - [Ffmpeg](https://ffmpeg.org/download.html)
+  - [FFmpeg](https://ffmpeg.org/download.html)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in respository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
   - [Mkvmerge](https://mkvtoolnix.download/downloads.html#windows:~:text=repository%20directory%20yourself.-,Windows,-Download)
   - [Recycle](http://www.maddogsw.com/cmdutils/cmdutils.zip) (it is not necessary to send files to the recycle bin instead of deleting them permanently but I use it to avoid loosing files when I am making changes to the script. This is also an easy to use file that requires no install)
