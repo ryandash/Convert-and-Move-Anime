@@ -1,61 +1,26 @@
 @echo off
 
 :loop
-For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mkv) do (
-	Set Dir=%%f
-	Set thename=%%~nf
+For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
+	Set "Dir=%%f"
+	Set "thename=%%~nf"
+	Set "subASS=%%~dpnf.default.eng.ass"
+	set "name="
 	setlocal EnableDelayedExpansion
 	del "%UserDirectory%\Videos\convert\!thename!.mkv" /f /q /s
-	endlocal
-	setlocal EnableDelayedExpansion
-	Set thename=!thename:_= !
-	Set "newName="
-	Set remove=f
-	Set "var="
-	Set /a pos=0
-	:NextChar	
-		Set tem=!thename:~%pos%,1!
-		if "!tem!"=="[" (
-			Set remove=t
-		)
-		if "!tem!"=="(" (
-			Set remove=t
-		)
-		if "!remove!"=="f" (
-			Set var=!var!!tem!
-		)
-		if "!tem!"==")" (
-			Set remove=f
-		)
-		if "!tem!"=="]" (
-			Set remove=f
-		)
-	set /a pos=pos+1
-	if not "!thename:~%pos%,1!"=="" goto NextChar
-	set /a pos=0
-	Set thename=!var!
+	
+	set "seasonEpisode="
 
-	:check
-	if "!thename:~0,1!"==" " (
-		set thename=!thename:~1!
-		goto :check
-	)
-	:check2
-	if "!thename:~-1!"==" " (
-		set thename=!thename:~0,-1!
-		goto :check2
-	)
-	ren "!Dir!" "!thename!.mkv"
-	set "Dir=%UserDirectory%\ConvertedVideos\!thename!.mkv"
-	set "name="
-
-	if not "!thename:- =0!"=="!thename!" (
+	if not "!thename: -=0!"=="!thename!" (
 		:again
-		set thename=!thename:~0,-1!
+		set "seasonEpisode=!thename:~-1!!seasonEpisode!"
+		set "thename=!thename:~0,-1!"
 		if not "!thename: -=0!"=="!thename!" (
 			goto again
 		)
+		set "seasonEpisode=!seasonEpisode:~2!"
 		set newName= !thename:episode= !
+		echo !newName! main path
 		goto recheck
 
 	) else (
@@ -65,6 +30,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mkv) do (
 			if not "!thename:~0,1!" =="0" (
 				if not "!thename:~0,1!" =="" (
 						set newName=!newName!!thename:~0,1!
+						echo !newName! 2nd path
 					set thename=!thename:~1!
 					goto again2
 				) else (
@@ -87,24 +53,20 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mkv) do (
 		set newName=!newName:~0,-1!
 		goto :recheck2
 	)
-
-	if not "!newName!"=="~0,-1" (
-		if not "!newName!"=="_=" (
-			set "season="
-			for %%d in (!newName!) do (echo %%d | findstr /r "S[0-9]">nul && (
-				set "fullseason=%%d"
-				set "season=\Season !fullseason:S=!"
-				)
-			)
-			set Dir2=D:\Anime\!newName!!season!
-			mkdir "!Dir2!"
-			move /Y "!Dir!" "!Dir2!"
-		)
+	
+	set "season="
+	for /f "delims=SE, tokens=1" %%d in ("!seasonEpisode!") do (
+		set "season=%%d"
 	)
+	set "Dir2=D:\Anime\!newName!\Season !season!"
+	mkdir "!Dir2!"
+	move /Y "!subASS!"  "!Dir2!"
+	move /Y "!Dir!" "!Dir2!"
 	endlocal
 	goto loop
 )
-
-cd /d D:/
-start cmd /c "%UserDirectory%\Documents\autoconvert.bat"
-exit
+echo finished moving videos
+@timeout /t 2 /nobreak
+cd /d "%UserDirectory%\Documents\"
+"cleanup subtitles and folders.bat"
+"autoconvert.bat"
