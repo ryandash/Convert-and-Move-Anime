@@ -7,7 +7,13 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 (Given an anime video, upscale and convert the anime to 4k 48fps)
 #### First half (use ffmpeg for 4k upscale)
 - Use timeouts to avoid trying to convert partially copied anime from another script.
-- Cleanup %temp% directory (If the computer is used for a long time without restarting then this directory becomes quite large with temp files)
+- Rename anime to a consistent naming scheme
+#### Remove:
+  - underlines between words
+  - everything between round and square brackets e.g. (stuff to remove) and [stuff to remove]
+  - dashes between words that are not between anime name and episode number
+  - whitespaces at beginning and end of filename
+     ##### goal is to have ([anime name] - S[season]E[episode number]) as the final result
 - Use ffmpeg to upscale anime with anime4k shaders and copy over all subtitles, audio streams, and attachements
 - clean up by deleting all unnecessary empty folders left in downloads
 #### Second half (to use hybrid to convert to 48fps)
@@ -22,18 +28,13 @@ Final result
 [Anime Folder]
 	[Season]
 		[anime mkv file]
-#### Remove:
-  - underlines between words
-  - everything between round and square brackets e.g. (stuff to remove) and [stuff to remove]
-  - dashes between words that are not between anime name and episode number
-  - whitespaces at beginning and end of filename
-     ##### goal is to have ([anime name] [season] - [episode number]) as the final result
  #### Extract:
-  - filename without number for folder name
-  - season number for subfolder season
+  - anime's name without season number for folder name
+  - season number for season subfolder
+  - subtitles
 -----------------------------------------------
   
-## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information. Suggestions on how to improve the scripts are welcome and appreciated but I will not be keeping an eye on this repository so do not expect any response to suggestions.
+## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information. Suggestions on how to improve the scripts are welcome and appreciated but I rarely visit this repository so do not expect any quick responses.
 -----------------------------------------------
 
 ## Things to Download:
