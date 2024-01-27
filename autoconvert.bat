@@ -53,7 +53,8 @@ IF !ERRORLEVEL! NEQ 0 (
 				)
 		
 				set "season=01"
-				for /f "delims=^" %%d in ("!thename!") do (echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9]* - ">nul && (
+				set "name=!thename!"
+				for /f "delims=^" %%d in ("!thename!") do (echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9][0-9]*E[0-9][0-9]*">nul || (
 						for %%d in (!thename!) do (echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9]">nul && (
 								set "season=%%d"
 								if "!season:~0,-1!"=="S" (
@@ -77,7 +78,6 @@ IF !ERRORLEVEL! NEQ 0 (
 						echo !thename!
 					)
 				)
-				
 				ren "!Dir!" "!thename!.mkv"
 				
 				:: Upscale 4k
