@@ -55,7 +55,7 @@ IF !ERRORLEVEL! NEQ 0 (
 				set "season=01"
 				set "name=!thename!"
 				for /f "delims=^" %%d in ("!thename!") do (echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9][0-9]*E[0-9][0-9]*">nul || (
-						for %%d in (!thename!) do (echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9]">nul && (
+						for %%d in (!thename!) do (set "episode=%%d" && echo %%d | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9]">nul && (
 								set "season=%%d"
 								if "!season:~0,-1!"=="S" (
 									set "season=0!season:S=!"
@@ -63,18 +63,11 @@ IF !ERRORLEVEL! NEQ 0 (
 								set "name=!thename: %%d=!"
 							)
 						)
-					
 						
-						:again
-						set "episode=!name:~-1!!episode!"
-						set "name=!name:~0,-1!"
-						
-						if not "!name:- =0!"=="!name!" (
-							goto again
-						)
-						set "episode=!episode:~1!"
+						call set name=%%name:!episode!=%%
+
 						echo !thename!
-						set "thename=!name: -=! - S!season:S=!E!episode!"
+						set "thename=!name!S!season:S=!E!episode!"
 						echo !thename!
 					)
 				)
