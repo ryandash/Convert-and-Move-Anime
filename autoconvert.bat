@@ -90,10 +90,12 @@ IF !ERRORLEVEL! NEQ 0 (
 		set "Name="
 		for /r "%UserDirectory%\Videos\convert" %%d in (*.mkv) do (
 			if exist %%d (
-				call set "Name=%%Name%% "%%d""
+				call set "Name="%%d""
+				goto loadHybrid
 			)
 		)
 
+		:loadHybrid
 		setlocal EnableDelayedExpansion
 		cd /d "C:\Program Files\Hybrid"
 		if not "!Name!"=="" (
@@ -103,3 +105,4 @@ IF !ERRORLEVEL! NEQ 0 (
 	)
 )
 endlocal
+exit

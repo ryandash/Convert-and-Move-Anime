@@ -66,7 +66,8 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	goto loop
 )
 echo finished moving videos
-@timeout /t 2 /nobreak
 cd /d "%UserDirectory%\Documents\"
-"cleanup subtitles and folders.bat"
-"autoconvert.bat"
+call "cleanup subtitles and folders.bat"
+cd /d "%UserDirectory%\Documents\"
+start cmd.exe /c "autoconvert.bat"
+exit
