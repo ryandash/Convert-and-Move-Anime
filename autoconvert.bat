@@ -1,10 +1,11 @@
 @echo off
 @timeout /t 10 /nobreak
-
 setlocal EnableDelayedExpansion
 tasklist /fi "ImageName eq Hybrid.exe" /fo csv 2>NUL | find /I "Hybrid.exe">NUL
+echo error level !ERRORLEVEL! for hybrid
 IF !ERRORLEVEL! NEQ 0 (
 	tasklist /fi "ImageName eq ffmpeg.exe" /fo csv 2>NUL | find /I "ffmpeg.exe">NUL
+	echo error level !ERRORLEVEL! for ffmpeg
 	IF !ERRORLEVEL! NEQ 0 (
 		endlocal
 		:loop
@@ -85,6 +86,7 @@ IF !ERRORLEVEL! NEQ 0 (
 		:: Cleanup empty folders
 		cd /d "%UserDirectory%\Downloads\"
 		for /f "delims=" %%d in ('dir /s /b /ad ^| sort /r') do rd "%%d"
+		echo cleanup empty folders
 
 		:: Hybrid Selur to interpolate to 2x
 		set "Name="
@@ -94,14 +96,17 @@ IF !ERRORLEVEL! NEQ 0 (
 				goto loadHybrid
 			)
 		)
-
+		
 		:loadHybrid
 		setlocal EnableDelayedExpansion
+		echo starting Hybrid with !Name!
 		cd /d "C:\Program Files\Hybrid"
 		if not "!Name!"=="" (
 			start Hybrid -global anime -autoAdd addAndStart !Name!
 		)
+		echo started Hybrid
 		endlocal
+		exit
 	)
 )
 endlocal

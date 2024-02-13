@@ -1,5 +1,5 @@
 @echo off
-
+@timeout /t 2 /nobreak
 :loop
 For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	Set "Dir=%%f"
@@ -7,6 +7,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	Set "subASS=%%~dpnf.default.eng.ass"
 	set "name="
 	setlocal EnableDelayedExpansion
+        echo moving !thename!
 	del "%UserDirectory%\Videos\convert\!thename!.mkv" /f /q /s
 	
 	set "seasonEpisode="
@@ -59,6 +60,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 		set "season=%%d"
 	)
 	set "Dir2=D:\Anime\!newName!\Season !season!"
+	echo !Dir2!
 	mkdir "!Dir2!"
 	move /Y "!subASS!"  "!Dir2!"
 	move /Y "!Dir!" "!Dir2!"
@@ -66,8 +68,8 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	goto loop
 )
 echo finished moving videos
-cd /d "%UserDirectory%\Documents\"
-call "cleanup subtitles and folders.bat"
-cd /d "%UserDirectory%\Documents\"
-start cmd.exe /c "autoconvert.bat"
+@timeout /t 5 /nobreak
+start cmd.exe /c "D:\Ryan\Documents\cleanup subtitles and folders.bat"
+start cmd.exe /c "D:\Ryan\Documents\autoconvert.bat"
+echo finished calling other batch files
 exit
