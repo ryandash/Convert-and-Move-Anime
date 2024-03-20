@@ -20,6 +20,7 @@ IF !ERRORLEVEL! NEQ 0 (
 				:: Rename and cleanup name
 				setlocal EnableDelayedExpansion
 				Set "thename=!thename:_= !"
+				Set "thename=!thename:.= !"
 				Set "remove=f"
 				Set "var="
 				Set /a pos=0
@@ -74,6 +75,16 @@ IF !ERRORLEVEL! NEQ 0 (
 						echo !thename!
 					)
 				)
+				
+				set "name="
+				for %%a in (!thename!) do (
+					set "name=!name! %%a"
+					echo %%a | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9][0-9]*E[0-9][0-9]">nul && (
+						set "thename=!name:~1!"
+						goto :done
+					)
+				)
+				:done
 				ren "!Dir!" "!thename!.mkv"
 				
 				:: Upscale 4k
