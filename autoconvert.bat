@@ -1,10 +1,12 @@
 @echo off
 @timeout /t 10 /nobreak
 setlocal EnableDelayedExpansion
-tasklist /fi "ImageName eq Hybrid.exe" /fo csv 2>NUL | find /I "Hybrid.exe">NUL
+tasklist /fi "ImageName eq VSPipe.exe" /fo csv 2>NUL | find /I "VSPipe.exe">NUL
+echo error level !ERRORLEVEL! for hybrid > "%UserDirectory%\Documents\autoconvertlog.txt"
 echo error level !ERRORLEVEL! for hybrid
 IF !ERRORLEVEL! NEQ 0 (
 	tasklist /fi "ImageName eq ffmpeg.exe" /fo csv 2>NUL | find /I "ffmpeg.exe">NUL
+	echo error level !ERRORLEVEL! for ffmpeg >> "%UserDirectory%\Documents\autoconvertlog.txt"
 	echo error level !ERRORLEVEL! for ffmpeg
 	IF !ERRORLEVEL! NEQ 0 (
 		endlocal
@@ -72,6 +74,16 @@ IF !ERRORLEVEL! NEQ 0 (
 						echo !thename!
 					)
 				)
+				
+				set "name="
+				for %%a in (!thename!) do (
+					set "name=!name! %%a"
+					echo %%a | %SystemRoot%\System32\findstr.exe /r /c:"S[0-9][0-9]*E[0-9][0-9]">nul && (
+						set "thename=!name:~1!"
+						goto :done
+					)
+				)
+				:done
 				ren "!Dir!" "!thename!.mkv"
 				
 				:: Upscale 4k
@@ -86,25 +98,26 @@ IF !ERRORLEVEL! NEQ 0 (
 		:: Cleanup empty folders
 		cd /d "%UserDirectory%\Downloads\"
 		for /f "delims=" %%d in ('dir /s /b /ad ^| sort /r') do rd "%%d"
+		echo cleanup empty folders >> "%UserDirectory%\Documents\autoconvertlog.txt"
 		echo cleanup empty folders
 
 		:: Hybrid Selur to interpolate to 2x
 		set "Name="
 		for /r "%UserDirectory%\Videos\convert" %%d in (*.mkv) do (
 			if exist %%d (
-				call set "Name="%%d""
-				goto loadHybrid
+				call set "Name=%%Name%% "%%d""
 			)
 		)
-		
-		:loadHybrid
+
 		setlocal EnableDelayedExpansion
+		echo starting Hybrid with !Name! >> "%UserDirectory%\Documents\autoconvertlog.txt"
 		echo starting Hybrid with !Name!
-		cd /d "C:\Program Files\Hybrid"
+		cd /d "C:\Program Files\Hybrid\"
 		if not "!Name!"=="" (
 			start Hybrid -global anime -autoAdd addAndStart !Name!
 		)
-		echo started Hybrid
+		echo started Hybrid >> "%UserDirectory%\Documents\autoconvertlog.txt"
+		echo started Hybrid 
 		endlocal
 		exit
 	)

@@ -68,8 +68,8 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	goto loop
 )
 echo finished moving videos
-@timeout /t 5 /nobreak
+@timeout /t 10 /nobreak
 start cmd.exe /c "%UserDirectory%\Documents\cleanup subtitles and folders.bat"
 start cmd.exe /c "%UserDirectory%\Documents\autoconvert.bat"
-echo finished calling other batch files
+echo finished calling other batch files > "%UserDirectory%\Documents\custommovelog.txt"
 exit
