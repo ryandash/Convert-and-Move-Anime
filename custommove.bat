@@ -4,7 +4,7 @@
 For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	Set "Dir=%%f"
 	Set "thename=%%~nf"
-	Set "subASS=%%~dpnf.default.eng.ass"
+	Set "movieName=%%~dpnf"
 	set "name="
 	setlocal EnableDelayedExpansion
         echo moving !thename!
@@ -17,11 +17,10 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 		set "seasonEpisode=!thename:~-1!!seasonEpisode!"
 		set "thename=!thename:~0,-1!"
 		if not "!thename: -=0!"=="!thename!" (
-			goto again
+		    goto again
 		)
 		set "seasonEpisode=!seasonEpisode:~2!"
 		set newName= !thename:episode= !
-		echo !newName! main path
 		goto recheck
 
 	) else (
@@ -30,8 +29,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 		if !varCheck!==0 (
 			if not "!thename:~0,1!" =="0" (
 				if not "!thename:~0,1!" =="" (
-						set newName=!newName!!thename:~0,1!
-						echo !newName! 2nd path
+					    set newName=!newName!!thename:~0,1!
 					set thename=!thename:~1!
 					goto again2
 				) else (
@@ -60,16 +58,21 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 		set "season=%%d"
 	)
 	set "Dir2=D:\Anime\!newName!\Season !season!"
-	echo !Dir2!
 	mkdir "!Dir2!"
-	move /Y "!subASS!"  "!Dir2!"
+	For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.ass) do (
+		set "subFile=%%f"
+		echo !subFile!
+		if not "!subFile:%movieName%=!"=="!subFile!" (
+		    move /Y "!subFile!"  "!Dir2!"
+		)
+	)
 	move /Y "!Dir!" "!Dir2!"
 	endlocal
 	goto loop
 )
 echo finished moving videos
 @timeout /t 10 /nobreak
-start cmd.exe /c "%UserDirectory%\Documents\cleanup subtitles and folders.bat"
-start cmd.exe /c "%UserDirectory%\Documents\autoconvert.bat"
-echo finished calling other batch files > "%UserDirectory%\Documents\custommovelog.txt"
+cd /d "%UserDirectory%\Documents\"
+start cmd.exe /c "cleanup subtitles and folders.bat"
+start cmd.exe /c "autoconvert.bat"
 exit
