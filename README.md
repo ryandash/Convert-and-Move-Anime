@@ -42,6 +42,6 @@ Final result
   - [FFmpeg](https://ffmpeg.org/download.html)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in respository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
   - [Mkvmerge](https://mkvtoolnix.download/downloads.html#windows:~:text=repository%20directory%20yourself.-,Windows,-Download)
-  - [Recycle](http://www.maddogsw.com/cmdutils/cmdutils.zip) (it is not necessary to send files to the recycle bin instead of deleting them permanently but I use it to avoid loosing files when I am making changes to the script. This is also an easy to use file that requires no install)
+  - [Recycle](http://www.maddogsw.com/cmdutils/cmdutils.zip) (it is not necessary to send files to the recycle bin instead of deleting them permanently but I use it to avoid losing files when I am making changes to the script. This is also an easy to use file that requires no install)
   
   
