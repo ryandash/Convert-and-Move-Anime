@@ -1,19 +1,15 @@
 # Convert-and-Move-Anime
 Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and moving the anime into proper subfolders to allow plex to auto add the anime with proper seasons
 
-### If you would like to replicate my scripts, links to all the downloads necessary are below in [Downloads](https://github.com/ryandash/Convert-and-Move-Anime/blob/main/README.md#downloads) section
+### If you would like to replicate my scripts, links to all the downloads necessary are below in [Things to Download](https://github.com/ryandash/Convert-and-Move-Anime?tab=readme-ov-file#things-to-download) section and run `pip install anitopy` before trying any batch files. [Anitopy python](https://github.com/igorcmoura/anitopy) is used to get the title name, season, and episode.
 
-## Script autoconvert.bat
+## Script autoconvert.bat + rename_anime.py
 (Given an anime video, upscale and convert the anime to 4k 48fps)
 #### First half (use ffmpeg for 4k upscale)
 - Use timeouts to avoid trying to convert partially copied anime from another script.
 - Rename anime to a consistent naming scheme
-#### Remove:
-  - underlines between words
-  - everything between round and square brackets e.g. (stuff to remove) and [stuff to remove]
-  - dashes between words that are not between anime name and episode number
-  - whitespaces at beginning and end of filename
-     ##### goal is to have ([anime name] - S[season]E[episode number]) as the final result
+#### Get Anime file information using Antimony Python:
+- Format to: ([anime name] - S[season]E[episode number])
 - Use ffmpeg to upscale anime with anime4k shaders and copy over all subtitles, audio streams, and attachements
 - clean up by deleting all unnecessary empty folders left in downloads
 #### Second half (to use hybrid to convert to 48fps)
@@ -22,26 +18,26 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 - use hybrid script to convert anime from 23.976 fps (~24 fps) to 47.952 fps (~48 fps)
 -----------------------------------------------
 
-## Script custommove.bat
+## Script custommove.bat + move_anime.py
 (Given a filename with a lot of unnecessary information and potentially season information, clean up the filename, extract season number, create season folder, and move file into either anime folder or season folder in the anime folder)
-Final result
-[Anime Folder]
-	[Season]
-		[anime mkv file]
- #### Extract:
+#### Final result:
+    [Anime Folder]
+	    [Season]
+	        [anime mkv file]
+		    [anime subtitle files]
+#### Extract:
   - anime's name without season number for folder name
   - season number for season subfolder
   - subtitles
 -----------------------------------------------
   
-## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information. Suggestions on how to improve the scripts are welcome and appreciated but I rarely visit this repository so do not expect any quick responses.
+## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information.
+The variable `%UserDirectory%` can be changed to the `%UserProfile%` path on windows which is the common location for documents and downloads.
+Suggestions on how to improve the scripts are welcome and appreciated but I rarely visit this repository so do not expect any quick responses.
 -----------------------------------------------
 
 ## Things to Download:
   - [Hybrid from selur](https://www.selur.de/downloads)
   - [FFmpeg](https://ffmpeg.org/download.html)
+  - [Python](https://www.python.org/downloads/)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in respository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
-  - [Mkvmerge](https://mkvtoolnix.download/downloads.html#windows:~:text=repository%20directory%20yourself.-,Windows,-Download)
-  - [Recycle](http://www.maddogsw.com/cmdutils/cmdutils.zip) (it is not necessary to send files to the recycle bin instead of deleting them permanently but I use it to avoid losing files when I am making changes to the script. This is also an easy to use file that requires no install)
-  
-  
