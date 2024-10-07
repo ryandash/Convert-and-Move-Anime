@@ -12,19 +12,15 @@ def move_anime_files(anime_video):
     new_directory = os.path.join("D:\\Anime" if anime_season else "D:\\Movies", anime_title, f"Season {int(anime_season):02}" if anime_season else "")
 
     os.makedirs(new_directory, exist_ok=True)
-    shutil.move(anime_video, new_directory)
 
-    # Move subtitle files
-    converted_videos_dir = os.path.join(os.getenv('UserDirectory'), 'ConvertedVideos')
-    print(converted_videos_dir)
-    for root, _, files in os.walk(converted_videos_dir):
+    # Move files with anime videos name to new directory
+    for root, _, files in os.walk(os.path.dirname(anime_video)):
         for file in files:
-            if file.endswith('.ass') and os.path.splitext(file_name)[0] in file:
-                sub_file_path = os.path.join(root, file)
-                shutil.move(sub_file_path, new_directory)
-                print(f"Moved subtitle: {sub_file_path}")
-
-    print(f"Moved video: {os.path.join(new_directory, file_name)}")
+            # If anime video name without extension is in file name and the file does not exists in new directory
+            if os.path.splitext(file_name)[0] in file and not os.path.exists(os.path.join(new_directory, file)):
+                file_path = os.path.join(root, file)
+                shutil.move(file_path, new_directory)
+                print(f"Moved: {file_path} to {new_directory}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Move anime video files and their subtitles to organized directories.")
