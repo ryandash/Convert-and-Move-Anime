@@ -72,4 +72,3 @@ IF !ERRORLEVEL! NEQ 0 (
 	)
 )
 endlocal
-exit
