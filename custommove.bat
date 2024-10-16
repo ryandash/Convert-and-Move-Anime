@@ -1,5 +1,5 @@
 @echo off
-
+echo start > "%UserDirectory%\Documents\deleted_subtitles.txt"
 for /f "delims=" %%a in ('where python') do set "pythonPath=%%a"
 
 For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
@@ -7,7 +7,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	del "%UserDirectory%\Videos\convert\%%~nf.mkv" /f /q /s
 	:: Use delayedexpansion to avoid removing exclamation marks from the path
 	setlocal EnableDelayedExpansion
-	echo "!Dir!" > "%UserDirectory%\Documents\move_anime.txt"
+	echo "!Dir!" >> "%UserDirectory%\Documents\move_anime.txt"
 	"!pythonPath!" "%UserDirectory%\Documents\move_anime.py" "!Dir!" >> "%UserDirectory%\Documents\move_anime.txt"
 	endlocal
 )
