@@ -16,4 +16,3 @@ timeout /t 10 /nobreak
 cd /d "%UserDirectory%\Documents\"
 call cmd.exe /c "cleanup subtitles and folders.bat"
 start cmd.exe /c "autoconvert.bat"
-exit
