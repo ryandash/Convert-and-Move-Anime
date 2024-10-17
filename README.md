@@ -3,7 +3,7 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
 
 ### If you would like to replicate my scripts, links to all the downloads necessary are below in [Things to Download](https://github.com/ryandash/Convert-and-Move-Anime?tab=readme-ov-file#things-to-download) section and run `pip install anitopy` before trying any batch files. [Anitopy python](https://github.com/igorcmoura/anitopy) is used to get the title name, season, and episode information.
 
-## Script autoconvert.bat + rename_anime.py
+## Script autoconvert.bat
 (Given an anime video, upscale and convert the anime to 4k 48fps)
 #### First half (use ffmpeg for 4k upscale)
 #### Second half (to use hybrid to convert to 48fps)
