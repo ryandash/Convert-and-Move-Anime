@@ -26,7 +26,7 @@ def anime_files(anime_video):
         # Rename and move the video file
         new_file = os.path.join(new_directory, f"{new_file_name}.{file_extension}")
         shutil.move(anime_video, new_file)
-        print(f"Moved: {new_file_name} to {new_file}")
+        print(f"Moved: {old_file_name} to {new_file}")
 
     # Regular expression to capture subtitle number (e.g., "0.ass", "1.ass")
     subtitle_number_regex = re.compile(r'(\d+)\.ass$')

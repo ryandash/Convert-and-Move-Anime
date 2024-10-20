@@ -1,5 +1,4 @@
 @echo off
-echo start > "%UserDirectory%\Documents\deleted_subtitles.txt"
 For /r "D:\Anime" %%f IN (*.ass, *.srt) do (
 	set "subtitle=%%f"
 	set "delete=true"
@@ -7,9 +6,9 @@ For /r "D:\Anime" %%f IN (*.ass, *.srt) do (
 	set "foundDefault=false"
 	set "video="
 
-	setlocal EnableDelayedExpansion
 	call :innerloop
-
+	
+	setlocal EnableDelayedExpansion
 	if "!foundDefault!"=="true" (
 		set "video=!video:~1!"
 		if exist "!video!.mp4" set "delete=false"
@@ -27,12 +26,12 @@ for /f "delims=" %%d in ('dir "D:\Anime" /s /b /ad ^| sort /r') do rd "%%d" 2>nu
 goto :end
 
 :innerloop
-for /f "tokens=1,* delims=." %%a in ("!string!") do (
+for /f "tokens=1,* delims=." %%a in ("%string%") do (
 	if "%%a"=="default" (
 		set "foundDefault=true"
 		goto :end
 	) else (
-		set "video=!video!.%%a"
+		set "video=%video%.%%a"
 		set "string=%%b"
 		goto :innerloop
 	)
