@@ -24,7 +24,7 @@ IF !ERRORLEVEL! NEQ 0 (
 			setlocal EnableDelayedExpansion
 			set "filename_ps=!filename:[=`[!"
 			set "filename_ps=!filename_ps:]=`]!"
-			set "filename=!filename:'=''!"
+			set "filename_ps=!filename_ps:'=''!"
 			set "counter=0"
 			for /f "tokens=1 delims=," %%a in ('ffprobe -loglevel error -select_streams s -show_entries stream^=index:stream_tags^=language -of csv^=p^=0 "!file!" ^| C:\Windows\System32\findstr.exe "eng"') do (
 				ffmpeg -y -i "!file!" -map 0:%%a -c:s ass "%UserDirectory%\ConvertedVideos\!filename!.default.eng.!counter!.utf8.ass"
