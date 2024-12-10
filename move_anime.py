@@ -9,10 +9,10 @@ def anime_files(anime_video):
     parsed_data = anitopy.parse(old_file_name)
 
     file_extension, episode_number = parsed_data.get('file_extension'), parsed_data.get('episode_number')
-    anime_title = str(parsed_data.get('anime_title'))
+    anime_title = str(parsed_data.get('anime_title')).replace(" - ", " ")
     # Handle case for movies
     if episode_number is None:
-        new_file_name = anime_title  # Ensure anime_title is a string
+        new_file_name = anime_title
         new_directory = os.path.join("D:\\Movies", new_file_name)
     else:
         anime_season = f"{int(parsed_data.get('anime_season', 1)):02}"
