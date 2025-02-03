@@ -6,8 +6,7 @@ For /r "%UserDirectory%\ConvertedVideos\" %%f IN (*.mp4, *.mkv, *.webm) do (
 	del "%UserDirectory%\Videos\convert\%%~nf.mkv" /f /q /s
 	:: Use delayedexpansion to avoid removing exclamation marks from the path
 	setlocal EnableDelayedExpansion
-	echo "!Dir!" in custommove.bat >> "%UserDirectory%\Documents\move_anime.txt"
-	"!pythonPath!" "%UserDirectory%\Documents\move_anime.py" "!Dir!" >> "%UserDirectory%\Documents\move_anime.txt"
+	"!pythonPath!" "%UserDirectory%\Documents\move_anime.py" "!Dir!"
 	endlocal
 )
 echo finished moving videos

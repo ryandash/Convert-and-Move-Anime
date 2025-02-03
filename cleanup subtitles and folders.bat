@@ -17,7 +17,7 @@ For /r "D:\Anime" %%f IN (*.ass, *.srt) do (
 		if "!delete!"=="true" (
 			del "!subtitle!" /f /q /s
 			echo deleted !subtitle!
-			echo deleted "!subtitle!" >> "%UserDirectory%\Documents\deleted_subtitles.txt"
+			echo deleted "!subtitle!"
 		)
 	)
 	endlocal

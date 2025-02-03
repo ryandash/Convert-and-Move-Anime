@@ -5,10 +5,10 @@ for /f "delims=" %%a in ('where powershell') do set "powershell=%%a"
 timeout /t 10 /nobreak
 setlocal EnableDelayedExpansion
 tasklist /fi "ImageName eq VSPipe.exe" /fo csv 2>NUL | find /I "VSPipe.exe">NUL
-echo error level !ERRORLEVEL! for hybrid > "%UserDirectory%\Documents\autoconvertlog.txt"
+echo error level !ERRORLEVEL! for hybrid
 IF !ERRORLEVEL! NEQ 0 (
 	tasklist /fi "ImageName eq ffmpeg.exe" /fo csv 2>NUL | find /I "ffmpeg.exe">NUL
-	echo error level !ERRORLEVEL! for ffmpeg >> "%UserDirectory%\Documents\autoconvertlog.txt"
+	echo error level !ERRORLEVEL! for ffmpeg
 	IF !ERRORLEVEL! NEQ 0 (
 		endlocal
 		cd /d "%UserDirectory%\Documents\ffmpeg\bin\"
@@ -17,8 +17,7 @@ IF !ERRORLEVEL! NEQ 0 (
 			set "filename=%%~nf"
 
 			:: Upscale 4k
-			echo upscaling %%~nxf > "%UserDirectory%\Documents\autoconvertlog.txt"
-			call ffmpeg -y -i "%%f" -init_hw_device "vulkan=vk:0" -vf libplacebo=w=3840:h=2160:upscaler=ewa_lanczos:force_original_aspect_ratio=decrease:custom_shader_path='shaders/Anime4K_ModeA.glsl',format=yuv420p -map 0 -c:v hevc_nvenc -cq 10 -bf 5 -refs 5 -preset p7 -c:a copy -sn "%UserDirectory%\Videos\convert\%%~nxf"
+			call ffmpeg -y -i "%%f" -init_hw_device "vulkan=vk:0" -vf libplacebo=w=3840:h=2160:upscaler=ewa_lanczos:force_original_aspect_ratio=decrease:custom_shader_path='shaders/Anime4K_ModeA.glsl',format=yuv420p10 -map 0 -c:v hevc_nvenc -cq 10 -bf 5 -refs 5 -preset p7 -c:a copy -sn "%UserDirectory%\Videos\convert\%%~nxf"
 			
 			:: Extract english subtitles
 			setlocal EnableDelayedExpansion
@@ -40,7 +39,6 @@ IF !ERRORLEVEL! NEQ 0 (
 		:: Cleanup empty folders
 		cd /d "%UserDirectory%\Downloads\"
 		for /f "delims=" %%d in ('dir /s /b /ad') do rd "%%d"
-		echo deleted empty folders >> "%UserDirectory%\Documents\autoconvertlog.txt"
 
 		set "Name="
 		for /r "%UserDirectory%\Videos\convert" %%d in (*.mkv) do (
@@ -53,7 +51,6 @@ IF !ERRORLEVEL! NEQ 0 (
 		:: Hybrid Selur to interpolate to 2x
 		cd /d "C:\Program Files\Hybrid\"
 		if not "!Name!"=="" (
-			echo starting Hybrid with !Name! >> "%UserDirectory%\Documents\autoconvertlog.txt"
 			start Hybrid -global anime -autoAdd addAndStart !Name!
 		)
 		endlocal
