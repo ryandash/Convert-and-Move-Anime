@@ -20,7 +20,7 @@ IF !ERRORLEVEL! NEQ 0 (
 			set "filename=%%~nf"
 
 			setlocal EnableDelayedExpansion
-			for /f "tokens=1,2 delims=|" %%a in ('%pythonPath% "%UserDirectory%\Documents\new_anime_name_directory.py" "%file%"') do (
+			for /f "tokens=1,2 delims=|" %%a in ('!pythonPath! "%UserDirectory%\Documents\new_anime_name_directory.py" "!file!"') do (
 				endlocal
 				set "newDirectory=%%a"
 				set "newFileName=%%b"
