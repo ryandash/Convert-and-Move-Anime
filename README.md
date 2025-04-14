@@ -1,15 +1,14 @@
 # Convert-and-Move-Anime
-Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hybrid from selur](https://www.selur.de/downloads), and moving the anime into proper subfolders to allow Plex or Jellyfin to auto add the anime with proper metadata.
+Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapoursynth, and moving the anime into proper subfolders to allow Plex or Jellyfin to auto add the anime.
 
-### If you would like to replicate my scripts, links to all the downloads necessary are below in [Things to Download](https://github.com/ryandash/Convert-and-Move-Anime?tab=readme-ov-file#things-to-download) section and run `pip install anitopy` before trying any batch files. [Anitopy python](https://github.com/igorcmoura/anitopy) is used to get the title name, season, and episode information.
+Requires pip install anitopy for python script to work
 
 ## Script autoconvert.bat
 (Given an anime video, upscale and convert the anime to 4k 48fps)
-#### First half (use ffmpeg for 4k upscale)
-#### Second half (to use hybrid to convert to 48fps)
+- use python script to extract anime title using anitopy
+- make a full path directory and create the necessary folders for Jellyfin or Plex using python
+- use ffmpeg with vapoursynth script to upscale to 4k and interpolate to 48fps outputting as an mp4 file
 - clean up downloads by deleting all empty folders
-- create a variable with 1 string containing all anime full directories
-- use hybrid script to convert anime from 23.976 fps (~24 fps) to 47.952 fps (~48 fps)
 -----------------------------------------------
 
 ## Script custommove.bat + move_anime.py
@@ -18,20 +17,23 @@ Upscale anime to 4k using ffmpeg and anime4k filters, convert to 48fps using [hy
     [Anime Folder]
 	    [Season]
 	        [anime mkv file]
-		[anime subtitle files]
+		    [anime subtitle files]
 #### Extract:
-  - anime's name for folder name
-  - season number for season subfolder
+  - anime's name for directory path and filename in python
+  - season number for season subfolder in python
   - subtitles
 -----------------------------------------------
-  
+
 ## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information.
 The variable `%UserDirectory%` can be changed to the `%UserProfile%` path on windows which is the common location for documents and downloads.
 Suggestions on how to improve the scripts are welcome and appreciated, but I rarely visit this repository so do not expect any quick responses.
 -----------------------------------------------
 
 ## Things to Download:
-  - [Hybrid from selur](https://www.selur.de/downloads)
+  - [Vapoursynth](https://www.vapoursynth.com/doc/installation.html)
+    
+    Vapoyrsynth Plugin for RIFE tensorrt (script is made for NVIDIA gpu)
+      - [vsmlrt-windows-x64-tensorrt](https://github.com/AmusementClub/vs-mlrt/releases)
   - [FFmpeg](https://ffmpeg.org/download.html)
   - [Python](https://www.python.org/downloads/)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in repository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
