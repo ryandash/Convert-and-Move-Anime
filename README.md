@@ -16,7 +16,7 @@ Requires `pip install anitopy` for python script to work
 #### Final result:
     [Anime Folder]
 	    [Season]
-	        [anime mkv file]
+	        [anime mp4 file]
 		[anime subtitle files]
 #### Extract:
   - anime's name for directory path and filename in python
