@@ -30,9 +30,9 @@ Suggestions on how to improve the scripts are welcome and appreciated, but I rar
 -----------------------------------------------
 
 ## Things to Download:
-  - [Vapoursynth](https://www.vapoursynth.com/doc/installation.html)
+  - [VapourSynth](https://www.vapoursynth.com/doc/installation.html)
     
-    Vapoyrsynth Plugin for RIFE tensorrt (script is made for NVIDIA gpu)
+    VapourSynth Plugin for RIFE tensorrt (script is made for NVIDIA gpu)
       - [vsmlrt-windows-x64-tensorrt](https://github.com/AmusementClub/vs-mlrt/releases)
   - [FFmpeg](https://ffmpeg.org/download.html)
   - [Python](https://www.python.org/downloads/)
