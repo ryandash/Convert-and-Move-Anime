@@ -1,7 +1,7 @@
 # Convert-and-Move-Anime
 Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapoursynth, and moving the anime into proper subfolders to allow Plex or Jellyfin to auto add the anime.
 
-Requires pip install anitopy for python script to work
+Requires `pip install anitopy` for python script to work
 
 ## Script autoconvert.bat
 (Given an anime video, upscale and convert the anime to 4k 48fps)
@@ -17,7 +17,7 @@ Requires pip install anitopy for python script to work
     [Anime Folder]
 	    [Season]
 	        [anime mkv file]
-		    [anime subtitle files]
+		[anime subtitle files]
 #### Extract:
   - anime's name for directory path and filename in python
   - season number for season subfolder in python
