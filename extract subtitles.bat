@@ -14,6 +14,7 @@ for /r "%UserDirectory%\Downloads\" %%f in (*.mkv) do (
 		set "newDirectory=%%a"
 		set "newFileName=%%b"
 		setlocal EnableDelayedExpansion
+	)
 	set "filename_ps=!newFileName:[=`[!"
 	set "filename_ps=!filename_ps:]=`]!"
 	set "filename_ps=!filename_ps:'=''!"
