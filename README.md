@@ -29,11 +29,15 @@ The variable `%UserDirectory%` can be changed to the `%UserProfile%` path on win
 Suggestions on how to improve the scripts are welcome and appreciated, but I rarely visit this repository so do not expect any quick responses.
 -----------------------------------------------
 
-## Things to Download:
+## Dependencies:
   - [VapourSynth](https://www.vapoursynth.com/doc/installation.html)
     
-    VapourSynth Plugin for RIFE tensorrt (script is made for NVIDIA gpu)
+    VapourSynth Plugins to put in vs-plugins (script is made for NVIDIA gpu)
       - [vsmlrt-windows-x64-tensorrt](https://github.com/AmusementClub/vs-mlrt/releases)
+      - [LSMASHSource](https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works/releases/)
+      - [libvs_placebol](https://github.com/Lypheo/vs-placebo/releases)
+      - [vs-miscfilter](https://github.com/vapoursynth/vs-miscfilters-obsolete/releases)
+      - Rife onnx models from [onnx models](https://github.com/styler00dollar/VSGAN-tensorrt-docker/releases/tag/models) or the ones found in vsmlrt or equivalent
   - [FFmpeg](https://ffmpeg.org/download.html)
   - [Python](https://www.python.org/downloads/)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in repository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
