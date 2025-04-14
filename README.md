@@ -11,17 +11,11 @@ Requires `pip install anitopy` for python script to work
 - clean up downloads by deleting all empty folders
 -----------------------------------------------
 
-## Script custommove.bat + move_anime.py
-(Given a filename with a lot of unnecessary information and potentially season information, clean up the filename, extract season number, create season folder, rename videos, and move file into either anime folder or season folder in the anime folder)
 #### Final result:
     [Anime Folder]
 	    [Season]
 	        [anime mp4 file]
 		[anime subtitle files]
-#### Extract:
-  - anime's name for directory path and filename in python
-  - season number for season subfolder in python
-  - subtitles
 -----------------------------------------------
 
 ## Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information.
@@ -41,3 +35,16 @@ Suggestions on how to improve the scripts are welcome and appreciated, but I rar
   - [FFmpeg](https://ffmpeg.org/download.html)
   - [Python](https://www.python.org/downloads/)
   - Anime4k shaders can be downloaded from repository or directly from [Anime4k](https://github.com/bloc97/Anime4K) (Shaders in repository are the original anime4k shaders merged together into 1 file for each mode for simplicity)
+
+## Instructions:
+1. Clone Repository
+2. Move autoconvert.bat and new_anime_name_directory.py into Documents folder
+3. Get vapoursynth portable into Documents folder
+4. Get all plugins extracting vsmlrt-windows-x64-tensorrt into vs-plugins folder and moving the dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder
+5. Move encode 4k 48fps.vpy script into vapoursynth-portable folder
+6. Download ffmpeg and extract bin folder to vapoursynth-portable folder
+7. Download and install python
+8. Run `pip install anitopy` in command line
+10. Download an anime into your downloads folder
+11. Add environemnt path variable UserDirectory=%UserProfile%
+12. Run autoconvert.bat
