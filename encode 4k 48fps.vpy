@@ -5,9 +5,6 @@ from fractions import Fraction
 from importlib.machinery import SourceFileLoader
 
 core = vs.core
-
-scriptPath = 'C:/Program Files/Hybrid/64bit/vsscripts'
-sys.path.insert(0, os.path.abspath(scriptPath))
 os.environ["CUDA_MODULE_LOADING"] = "LAZY"
 
 user_directory = os.environ['UserDirectory']

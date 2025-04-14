@@ -20,7 +20,7 @@ IF !ERRORLEVEL! NEQ 0 (
 			set "filename=%%~nf"
 
 			setlocal EnableDelayedExpansion
-			for /f "tokens=1,2 delims=|" %%a in ('!pythonPath! "%UserDirectory%\Documents\new_anime_name_directory.py" "!file!"') do (
+			for /f "tokens=1,2 delims=|" %%a in ('!pythonPath! "!UserDirectory!\Documents\new_anime_name_directory.py" "!file!"') do (
 				endlocal
 				set "newDirectory=%%a"
 				set "newFileName=%%b"
@@ -31,10 +31,14 @@ IF !ERRORLEVEL! NEQ 0 (
 
 			REM Upscale 4k
 			call vspipe --arg source="!file!" -c y4m "encode 4k 48fps.vpy" - | ffmpeg -y -f yuv4mpegpipe -i pipe:0 -hwaccel cuvid -i "!file!" -c:v hevc_nvenc -cq 26 -bf 5 -refs 3 -preset p5 -map 0:v -map 1:a -c:a copy -sn "!newDirectory!\!newFileName!.mp4"
+			
 			REM Extract english subtitles
 			set "filename_ps=!newFileName:[=`[!"
 			set "filename_ps=!filename_ps:]=`]!"
 			set "filename_ps=!filename_ps:'=''!"
+			set "directory_ps=!newDirectory:[=`[!"
+			set "directory_ps=!directory_ps:]=`]!"
+			set "directory_ps=!directory_ps:'=''!"
 
 			set "counter=0"
 			for /f "tokens=1,2 delims=," %%a in ('ffprobe -loglevel error -select_streams s -show_entries stream^=index:stream_tags^=language -of csv^=p^=0 "!file!"') do (
@@ -48,13 +52,9 @@ IF !ERRORLEVEL! NEQ 0 (
 					set "suffix=%%b"
 				)
 
-				set "tempFile=!newDirectory!\!newFileName!.!suffix!.!counter!.utf8.ass"
-				set "finalFile=!newDirectory!\!newFileName!.!suffix!.!counter!.ass"
-
-				ffmpeg -y -i "!file!" -map 0:!sub_index! -c:s ass "!tempFile!"
-				!powershell! -Command Get-Content -Path "!tempFile!" -Encoding UTF8 ^| Set-Content -Path "!finalFile!" -Encoding utf8
-				del "!tempFile!" /f /q /s
-
+				ffmpeg -y -i "!file!" -map 0:!sub_index! -c:s ass "!newDirectory!\!newFileName!.!suffix!.!counter!.utf8.ass"
+				!powershell! -Command "Get-Content -Path '!directory_ps!\!filename_ps!.!suffix!.!counter!.utf8.ass' -Encoding UTF8 ^| Set-Content -Path '!directory_ps!\!filename_ps!.!suffix!.!counter!.ass' -Encoding utf8"
+				del "!newDirectory!\!newFileName!.!suffix!.!counter!.utf8.ass"
 				set /a "counter+=1"
 			)
 			del "!file!" /q /s
