@@ -26,7 +26,7 @@ Suggestions on how to improve the scripts are welcome and appreciated, but I rar
 ## Dependencies:
   - [VapourSynth](https://www.vapoursynth.com/doc/installation.html)
     
-    VapourSynth Plugins to put in vs-plugins (script is made for NVIDIA gpu)
+    VapourSynth Plugins to put in vs-plugins (script is made for NVIDIA gpu) (already included in repo)
       - [vsmlrt-windows-x64-tensorrt](https://github.com/AmusementClub/vs-mlrt/releases)
       - [LSMASHSource](https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works/releases/)
       - [libvs_placebol](https://github.com/Lypheo/vs-placebo/releases)
@@ -40,11 +40,11 @@ Suggestions on how to improve the scripts are welcome and appreciated, but I rar
 1. Clone Repository
 2. Move autoconvert.bat and new_anime_name_directory.py into Documents folder
 3. Get vapoursynth portable into Documents folder
-4. Get all plugins extracting vsmlrt-windows-x64-tensorrt into vs-plugins folder and moving the dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder
-5. Move encode 4k 48fps.vpy script into vapoursynth-portable folder
-6. Download ffmpeg and extract bin folder to vapoursynth-portable folder
-7. Download and install python
+4. Get and extract vsmlrt-windows-x64-tensorrt into vs-plugins folder
+5. Get and extract dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder (already found in repo)
+6. Download ffmpeg and extract bin folder contents to vapoursynth-portable folder
+7. Download and install python (or use the python included with VapourSynth using `set "pythonPath=path to VapourSynth python"`)
 8. Run `pip install anitopy` in command line
-10. Download an anime into your downloads folder
-11. Add environemnt path variable UserDirectory=%UserProfile%
-12. Run autoconvert.bat
+9. Download an anime into your downloads folder
+10. Add environment path variable UserDirectory=%UserProfile%
+11. Run autoconvert.bat
