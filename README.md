@@ -35,7 +35,6 @@ Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapou
 1. Clone Repository
 2. Move autoconvert.bat and new_anime_name_directory.py into Documents folder
 3. Get vapoursynth portable into Documents folder
-4. Get and extract vsmlrt-windows-x64-tensorrt into vs-plugins folder
 4. If using basic Rife instead of drba_rife, get and extract vsmlrt-windows-x64-tensorrt into vs-plugins folder
 5. Get and extract dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder (already found in repo)
 6. Download ffmpeg and extract bin folder contents to vapoursynth-portable folder
