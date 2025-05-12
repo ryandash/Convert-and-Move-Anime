@@ -35,14 +35,17 @@ Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapou
 1. Clone Repository
 2. Move autoconvert.bat and new_anime_name_directory.py into Documents folder
 3. Get vapoursynth portable into Documents folder
-4. If using basic Rife instead of drba_rife, get and extract vsmlrt-windows-x64-tensorrt into vs-plugins folder
-5. Get and extract dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder (already found in repo)
-6. Download ffmpeg and extract bin folder contents to vapoursynth-portable folder
-7. Download and install python (or use the python included with VapourSynth using `set "pythonPath=path to VapourSynth python"`)
-8. Run `python -m pip install anitopy` in command line or navigate to VapourSynth python and run it there if pythonPath=path to VapourSynth python
-9. In command line navigate to VapourSynth python and run `python -m pip install -U packaging setuptools wheel torch torchvision torch_tensorrt cupy-cuda12x vsdrba` to install the necessary packages
-10. Navigate to Lib\site-packages\vsdrba in vapoursynth-portable and add a folder named models if it does not exist
-11. Run `python -m vsdrba` in the vapoursynth-portable folder
-12. Download an anime into your downloads folder
-13. Add environment path variable UserDirectory=%UserProfile%
-14. Run autoconvert.bat
+4. Get and extract dll files for LSMASHSource, libvs_placebol, and vs-miscfilter into vs-plugins folder (can be found in cloned repo)
+5. Download ffmpeg and extract bin folder contents to vapoursynth-portable folder
+6. Download and install python (or use the python included with VapourSynth using `set "pythonPath=path to VapourSynth python"`)
+7. Run `python -m pip install anitopy` in command line or navigate to VapourSynth python and run it there if pythonPath=path to VapourSynth python
+8. In command line navigate to VapourSynth python and run 
+```command
+python -m pip install -U packaging setuptools wheel
+python -m pip install -U torch torchvision torch_tensorrt --index-url https://download.pytorch.org/whl/cu128 --extra-index-url https://pypi.nvidia.com
+python -m pip install -U vsrife
+python -m vsrife
+```
+10. Download an anime into your downloads folder
+12. Add environment path variable UserDirectory=%UserProfile%
+13. Run autoconvert.bat

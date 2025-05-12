@@ -3,7 +3,7 @@ import sys
 import os
 from fractions import Fraction
 from importlib.machinery import SourceFileLoader
-from vsdrba import drba_rife
+from vsrife import rife
 
 core = vs.core
 os.environ["CUDA_MODULE_LOADING"] = "LAZY"
@@ -18,7 +18,7 @@ clip = core.placebo.Shader(clip, width=3840, height=2160, shader=user_directory 
 clip = core.std.AddBorders(clip=clip, left=0, right=0, top=8, bottom=8)
 clip = core.resize.Bicubic(clip=clip, format=vs.RGBH, matrix_in_s="709", range_s="limited")
 
-clip = drba_rife(clip, model="4.26", scale=0.5, sc=True, sc_threshold=0.1, trt=True, trt_optimization_level=5, trt_cache_dir=user_directory +"/ConvertedVideos")
+clip = rife(clip, scale=0.5, sc=True, sc_threshold=0.1, trt=True, trt_workspace_size=(1 << 30), trt_max_aux_streams=0, trt_optimization_level=5, trt_cache_dir=user_directory +"/ConvertedVideos")
 
 clip = core.std.Crop(clip=clip, left=0, right=0, top=8, bottom=8)
 clip = core.resize.Bicubic(clip=clip, format=vs.YUV420P10, matrix_s="709", range_s="limited", dither_type="error_diffusion")
