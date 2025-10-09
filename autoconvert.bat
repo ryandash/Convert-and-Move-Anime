@@ -33,7 +33,7 @@ IF !ERRORLEVEL! NEQ 0 (
 			if not exist "!tempOutput!" mkdir "!tempOutput!"
 
 			REM Upscale 4k
-			call vspipe --arg source="!file!" -c y4m "encode 4k 48fps.vpy" - | ffmpeg -y -f yuv4mpegpipe -i pipe:0 -hwaccel cuvid -i "!file!" -c:v hevc_nvenc -cq 26 -rc vbr -bf 5 -refs 4 -preset p5 -map 0:v -map 1:a -c:a aac -q:a 1 -sn "!tempOutput!\!newFileName!.mp4"
+			call vspipe --arg source="!file!" -c y4m "encode 4k 48fps.vpy" - | ffmpeg -y -f yuv4mpegpipe -i pipe:0 -i "!file!" -c:v hevc_nvenc -cq 26 -rc vbr -bf 5 -refs 4 -preset p5 -spatial-aq 1 -temporal-aq 1 -aq-strength 10 -map 0:v -map 1:a -c:a aac -sn "!tempOutput!\!newFileName!.mp4"
 
 			REM Move file to final destination
 			move /Y "!tempOutput!\!newFileName!.mp4" "!newDirectory!\!newFileName!.mp4"

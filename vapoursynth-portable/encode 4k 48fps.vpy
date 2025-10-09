@@ -13,12 +13,12 @@ user_directory = os.environ['UserDirectory']
 input_video = globals()["source"]
 clip = core.lsmas.LWLibavSource(source=input_video, format="YUV444P16", cache=0, fpsnum=24000, fpsden=1001, prefer_hw=1)
 
-clip = core.placebo.Shader(clip, width=3840, height=2160, shader=user_directory + "/Documents/vapoursynth-portable/shaders/Anime4K_ModeA.glsl")
+clip = core.placebo.Shader(clip, width=clip.width * 2, height=clip.height * 2, shader=user_directory + "/Documents/vapoursynth-portable/shaders/Anime4K_ModeA.glsl")
 
 clip = core.std.AddBorders(clip=clip, left=0, right=0, top=8, bottom=8)
 clip = core.resize.Bicubic(clip=clip, format=vs.RGBH, matrix_in_s="709", range_s="limited")
 
-clip = drba_rife(clip, model="4.26", sc=True, trt=True, trt_workspace_size=(1 << 30), trt_optimization_level=5, trt_cache_dir=user_directory +"/ConvertedVideos")
+clip = drba_rife(clip, model="4.25", sc=True, trt=True, trt_optimization_level=4, trt_cache_dir=user_directory +"/ConvertedVideos")
 
 clip = core.std.Crop(clip=clip, left=0, right=0, top=8, bottom=8)
 clip = core.resize.Bicubic(clip=clip, format=vs.YUV420P10, matrix_s="709", range_s="limited", dither_type="error_diffusion")
