@@ -13,7 +13,7 @@ Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapou
     [Anime Folder]
 	    [Season]
 	        [anime mp4 file]
-		[anime subtitle files]
+			[anime subtitle files]
 -----------------------------------------------
 
 ### Scripts can be simplified and improved but should work as is for common downloaded anime episodes **WITH** changes to directory information.
@@ -42,7 +42,7 @@ Upscale anime to 4k using ffmpeg with anime4k shaders, 48fps using rife in vapou
 8. In command line navigate to VapourSynth python and run 
 ```command
 python -m pip install -U packaging setuptools wheel
-python -m pip install -U torch torchvision torch_tensorrt --index-url https://download.pytorch.org/whl/cu128 --extra-index-url https://pypi.nvidia.com
+python -m pip install -U torch torchvision torch_tensorrt --index-url https://download.pytorch.org/whl/cu128 --extra-index-url https://pypi.nvidia.com --no-build-isolation 
 python -m pip install -U cupy-cuda12x
 python -m pip install -U vsdrba
 ```
