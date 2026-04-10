@@ -9,6 +9,11 @@ def anime_files(anime_video):
 
     file_extension, episode_number = parsed_data.get('file_extension'), parsed_data.get('episode_number')
     anime_title = str(parsed_data.get('anime_title')).replace(" - ", " ")
+
+    anime_year = parsed_data.get('anime_year')
+    if anime_year:
+        anime_title = f"{anime_title} ({anime_year})"
+
     # Handle case for movies
     if episode_number is None:
         new_file_name = anime_title
