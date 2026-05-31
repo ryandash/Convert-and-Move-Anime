@@ -1,9 +1,33 @@
 @echo off
 
-for /f "delims=" %%a in ('where python') do set "pythonPath=%%a"
 for /f "delims=" %%a in ('where powershell') do set "powershell=%%a"
+set "pythonPath=C:\Users\%USERNAME%\AppData\Local\Programs\Python\Python313\python.exe"
 
-cd /d "%UserDirectory%\Documents\ffmpeg\bin"
+setlocal EnableDelayedExpansion
+if not exist "!pythonPath!" (
+    echo Python not found. Installing Python 3.13...
+    
+    winget install Python.Python.3.13 -e --accept-package-agreements --accept-source-agreements --disable-interactivity
+
+    REM Optional: refresh environment if needed
+    call refreshenv >nul 2>&1
+
+    REM Test again after install
+    if not exist "!pythonPath!" (
+        echo Failed to install Python. Exiting.
+        exit /b 1
+    )
+)
+
+echo Using Python: !pythonPath!
+
+REM Upgrade pip and install requirements
+set "scriptDir=%~dp0"
+!pythonPath! -m pip install --upgrade pip
+!pythonPath! -m pip install -r "!scriptDir!requirements.txt"
+endlocal
+
+cd /d "%UserDirectory%\Documents\vapoursynth-portable"
 for /r "%UserDirectory%\Downloads\" %%f in (*.mkv) do (
 	set "file=%%f"
 

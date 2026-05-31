@@ -28,7 +28,7 @@ set "scriptDir=%~dp0"
 
 timeout /t 5 /nobreak
 tasklist /fi "ImageName eq VSPipe.exe" /fo csv 2>NUL | find /I "VSPipe.exe">NUL
-echo error level !ERRORLEVEL! for hybrid
+echo error level !ERRORLEVEL! for vspipe
 IF !ERRORLEVEL! NEQ 0 (
 	tasklist /fi "ImageName eq ffmpeg.exe" /fo csv 2>NUL | find /I "ffmpeg.exe">NUL
 	echo error level !ERRORLEVEL! for ffmpeg
@@ -59,7 +59,7 @@ IF !ERRORLEVEL! NEQ 0 (
 
 			REM Upscale 4k
 			call vspipe --arg source="!file!" -c y4m "encode 4k 48fps.vpy" - | ffmpeg -y -f yuv4mpegpipe -i pipe:0 -i "!file!" -c:v hevc_nvenc -cq 26 -rc vbr -bf 5 -refs 4 -preset p5 -spatial-aq 1 -temporal-aq 1 -aq-strength 10 -map 0:v -map 1:a -c:a aac -sn "!tempOutput!\!newFileName!.mp4"
-			
+
 			REM Move file to final destination
 			move /Y "!tempOutput!\!newFileName!.mp4" "!newDirectory!\!newFileName!.mp4"
 			
