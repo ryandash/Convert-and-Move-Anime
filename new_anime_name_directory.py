@@ -114,11 +114,11 @@ async def main(anime_video: str, retries=3):
                         f"Season {anime_season}"
                     )
 
-                    if eps:
-                        width = len(str(eps))
-                        episode_str = str(episode_index).zfill(width)
+                    if eps and eps != float("inf"):
+                        episode_str = str(episode_index).zfill(len(str(int(eps))))
                     else:
-                        episode_str = str(episode_index)
+                        episode_str = f"{episode_index:02d}"
+                        
 
                     new_file_name = f"{anime_title} - S{anime_season}E{episode_str}"
 

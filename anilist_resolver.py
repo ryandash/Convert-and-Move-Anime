@@ -23,6 +23,7 @@ async def anilist_search(session, query: str):
           format
           relations {
             edges {
+              relationType
               node {
                 id
               }
@@ -54,6 +55,7 @@ async def anilist_get_media_batch(session, ids: list[int]):
           format
           relations {
             edges {
+              relationType
               node { 
                 id 
               }
@@ -81,16 +83,22 @@ def pick_title(media):
     return t.get("romaji") or t.get("english") or "Unknown"
 
 
-NORMALIZE_RE = re.compile(r"[:.!]")
+NORMALIZE_RE = re.compile(r"[:!]")
 def normalize(s):
-    return NORMALIZE_RE.sub("", s).lower().strip()
+    return NORMALIZE_RE.sub(" ", s).lower().strip()
 
 def similarity(a, b):
     return int(SequenceMatcher(None, a, b).ratio() * 100)
 
-SANITIZE_RE = re.compile(r"[:.!]")
+SANITIZE_RE = re.compile(r"[.!]")
 def sanitize(name: str) -> str:
-    return SANITIZE_RE.sub("", name).strip()
+    if not name:
+        return ""
+
+    name = name.replace(":", " ")
+    name = SANITIZE_RE.sub("", name)
+
+    return name.strip()
 
 
 # =========================
@@ -120,6 +128,20 @@ def is_skippable(media):
 
     return is_ova or is_special or is_wrong_type or is_single_episode
 
+FORMAT_PRIORITY = {
+    "TV": 0,
+    "ONA": 1,
+    "TV_SPECIAL": 2,
+    "MOVIE": 3,
+    "OVA": 4,
+    "SPECIAL": 5,
+}
+
+def get_type_priority(media):
+    return FORMAT_PRIORITY.get(
+        (media.get("format") or "").upper(),
+        999
+    )
 
 PART_RE = re.compile(r"\bpart\s*\d+\b")
 SPACE_RE = re.compile(r"\s+")
@@ -135,50 +157,116 @@ def base_series_key(media):
     return name
 
 async def build_series(session, root_media):
-    # 1. fetch root fully
-    root_full = await anilist_get_media_batch(session, [root_media["id"]])
-    root_full = root_full[0]
+    root = (await anilist_get_media_batch(session, [root_media["id"]]))[0]
 
-    cache = {root_full["id"]: root_full}
+    cache = {root["id"]: root}
 
-    # 2. extract ALL related IDs (NO BFS)
-    ids = {
-        edge["node"]["id"]
-        for edge in root_full.get("relations", {}).get("edges", [])
-        if edge.get("node")
-    }
+    async def get_media(mid):
+        if mid not in cache:
+            cache[mid] = (await anilist_get_media_batch(session, [mid]))[0]
+        return cache[mid]
 
-    ids.add(root_full["id"])
+    async def get_best_relation(media, relation_type):
+        candidates = []
 
-    # 3. single batch fetch
-    media_list = await anilist_get_media_batch(session, list(ids))
+        for edge in media.get("relations", {}).get("edges", []):
+            if edge.get("relationType") != relation_type:
+                continue
 
-    cache = {m["id"]: m for m in media_list}
+            node = edge.get("node")
+            if not node:
+                continue
 
-    # 4. grouping
+            candidate = await get_media(node["id"])
+
+            candidates.append(candidate)
+
+        if not candidates:
+            return None
+
+        candidates.sort(
+            key=lambda x: (
+                get_type_priority(x),
+                x.get("seasonYear") or 9999,
+                {"WINTER": 0,
+                 "SPRING": 1,
+                 "SUMMER": 2,
+                 "FALL": 3}.get(x.get("season"), 99)
+            )
+        )
+
+        return candidates[0]
+
+    # Walk backwards
+
+    prequels = []
+    current = root
+
+    visited = {root["id"]}
+
+    while True:
+        prev = await get_best_relation(current, "PREQUEL")
+
+        if not prev or prev["id"] in visited:
+            break
+
+        visited.add(prev["id"])
+
+        if not is_skippable(prev):
+            prequels.append(prev)
+
+        current = prev
+
+    prequels.reverse()
+
+    # Walk forwards
+
+    sequels = []
+    current = root
+
+    while True:
+        nxt = await get_best_relation(current, "SEQUEL")
+
+        if not nxt or nxt["id"] in visited:
+            break
+
+        visited.add(nxt["id"])
+
+        if not is_skippable(nxt):
+            sequels.append(nxt)
+
+        current = nxt
+
+    series = []
+
+    series.extend(prequels)
+
+    if not is_skippable(root):
+        series.append(root)
+
+    series.extend(sequels)
+
+    # Merge entries with the same base series key.
     grouped = {}
 
-    for media in cache.values():
-        if is_skippable(media):
-            continue
-
+    for media in series:
         key = base_series_key(media)
-        eps = media.get("episodes") or 0
+        eps = media.get("episodes") or float("inf")
 
         if key not in grouped:
-            grouped[key] = media
+            grouped[key] = dict(media)
             grouped[key]["_episode_sum"] = eps
         else:
             grouped[key]["_episode_sum"] += eps
 
-    series = list(grouped.values())
+    result = list(grouped.values())
 
-    series.sort(key=lambda x: (
-        x.get("seasonYear") or 0,
-        {"WINTER": 0, "SPRING": 1, "SUMMER": 2, "FALL": 3}.get(x.get("season"), 99)
-    ))
+    for media in result:
+        print("Media episode sum", media["_episode_sum"], "for", pick_title(media))
+        media["episodes"] = media["_episode_sum"]
+        del media["_episode_sum"]
 
-    return series
+    return result
 
 
 def rebase_series(series, start_season):
@@ -235,6 +323,7 @@ def resolve_episode(series, episode_number, start_season=1):
         if eps is None:
             return season, episode_number, None
 
+        print(eps, "episodes")
         if episode_number > eps:
             episode_number -= eps
             print("Episode number:", episode_number)
