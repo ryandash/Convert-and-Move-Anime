@@ -11,6 +11,16 @@ os.environ["CUDA_CACHE_DISABLE"] = "0"
 
 user_directory = os.environ['UserDirectory']
 
+plugins_dir = os.path.join(user_directory, "Documents", "vapoursynth-portable", "vs-plugins")
+
+for file in os.listdir(plugins_dir):
+    if file.lower().endswith(".dll"):
+        try:
+            core.std.LoadPlugin(os.path.join(plugins_dir, file))
+            print("Loaded:", file)
+        except Exception as e:
+            print("Failed:", file, e)
+
 input_video = globals()["source"]
 clip = core.lsmas.LWLibavSource(
     source=input_video, 
@@ -36,7 +46,7 @@ clip = drba_rife(
     sc=True,
     sc_threshold=0.15,
     trt=True, 
-    trt_optimization_level=4, 
+    trt_optimization_level=5, 
     trt_cache_dir=user_directory + "/ConvertedVideos"
 )
 
