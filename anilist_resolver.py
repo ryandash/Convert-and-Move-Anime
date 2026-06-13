@@ -90,7 +90,7 @@ def normalize(s):
 def similarity(a, b):
     return int(SequenceMatcher(None, a, b).ratio() * 100)
 
-SANITIZE_RE = re.compile(r"[.!]")
+SANITIZE_RE = re.compile(r'[<>"/\\|?*]')
 def sanitize(name: str) -> str:
     if not name:
         return ""
